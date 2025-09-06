@@ -40,7 +40,7 @@ cd jarvis
 pip install -r requirements.txt
 
 # Запускаем ассистента
-python main.py
+запускпем Jarvis.bat
 
 
 📌 Примеры команд
