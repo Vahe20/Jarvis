@@ -18,3 +18,4 @@ PySide6
 qasync
 pillow
 pyscreeze
+ElevenLabs
