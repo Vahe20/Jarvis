@@ -1,4 +1,4 @@
-pyaudio
+PyAudio
 pvporcupine
 vosk
 gtts
@@ -12,11 +12,14 @@ openai
 dotenv
 mss
 numpy
-opencv
+opencv-python
 plyer
 python-Levenshtein
 PySide6
 qasync
 pillow
 pyscreeze
-ElevnLabs
+elevenlabs
+pyjokes
+psutil
+PyGetWindow
