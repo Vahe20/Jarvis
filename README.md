@@ -36,6 +36,13 @@ Jarvis — это персональный голосовой ассистент
 git clone https://github.com/username/jarvis.git
 cd jarvis
 
+python -m venv venv
+
+#cmd
+venv\Scripts\activate.bat
+#git
+source venv/Scripts/activate
+
 # Устанавливаем зависимости
 pip install -r requirements.txt
 
