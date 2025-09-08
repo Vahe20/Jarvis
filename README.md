@@ -24,9 +24,9 @@ Jarvis — это персональный голосовой ассистент
 ## 🛠️ Технологии
 - Python 3.13  
 - [Vosk](https://alphacephei.com/vosk/) / [Picovoice Porcupine](https://picovoice.ai/platform/porcupine/)
-- [gTTS](https://pypi.org/project/gTTS/) (text-to-speech)
+- [gTTS](https://pypi.org/project/gTTS/) / [ElevenLabs](https://elevenlabs.io/app/home) (text-to-speech)
 - pyside6 GUI
-- OpenAI API *(опционально)*  
+- OpenAI API / groc AI API *(опционально)*
 
 ---
 
