@@ -2,6 +2,8 @@ from vosk import KaldiRecognizer, Model
 import pyaudio, json
 import pvporcupine
 import time
+import numpy as np
+import sounddevice as sd
 
 import config
 
@@ -15,11 +17,13 @@ porcupine = pvporcupine.create(
 )
 
 pa = pyaudio.PyAudio()
+index = 0
 stream = pa.open(
     rate=porcupine.sample_rate,
     channels=1,
     format=pyaudio.paInt16,
     input=True,
+    input_device_index=index,
     frames_per_buffer=porcupine.frame_length
 )
 

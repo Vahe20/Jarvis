@@ -16,10 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractScrollArea, QApplication, QCheckBox, QDialog,
-    QFrame, QGridLayout, QHBoxLayout, QLabel,
-    QLayout, QLineEdit, QPushButton, QScrollArea,
-    QSizePolicy, QSpacerItem, QTabWidget, QVBoxLayout,
-    QWidget)
+    QFrame, QGridLayout, QGroupBox, QHBoxLayout,
+    QLabel, QLayout, QLineEdit, QPushButton,
+    QScrollArea, QSizePolicy, QSpacerItem, QTabWidget,
+    QVBoxLayout, QWidget)
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -80,89 +80,149 @@ class Ui_Dialog(object):
 
         self.verticalLayout_12.addWidget(self.label_7)
 
-        self.StarWords = QGridLayout()
-        self.StarWords.setObjectName(u"StarWords")
+        self.StartWords = QGridLayout()
+        self.StartWords.setObjectName(u"StartWords")
         self.checkBox_9 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_9.setObjectName(u"checkBox_9")
 
-        self.StarWords.addWidget(self.checkBox_9, 2, 3, 1, 1)
+        self.StartWords.addWidget(self.checkBox_9, 2, 3, 1, 1)
 
         self.checkBox_6 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_6.setObjectName(u"checkBox_6")
 
-        self.StarWords.addWidget(self.checkBox_6, 1, 3, 1, 1)
+        self.StartWords.addWidget(self.checkBox_6, 1, 3, 1, 1)
 
         self.checkBox_8 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_8.setObjectName(u"checkBox_8")
 
-        self.StarWords.addWidget(self.checkBox_8, 2, 2, 1, 1)
+        self.StartWords.addWidget(self.checkBox_8, 2, 2, 1, 1)
 
         self.checkBox_12 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_12.setObjectName(u"checkBox_12")
 
-        self.StarWords.addWidget(self.checkBox_12, 3, 3, 1, 1)
+        self.StartWords.addWidget(self.checkBox_12, 3, 3, 1, 1)
 
         self.checkBox_3 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_3.setObjectName(u"checkBox_3")
 
-        self.StarWords.addWidget(self.checkBox_3, 0, 3, 1, 1)
+        self.StartWords.addWidget(self.checkBox_3, 0, 3, 1, 1)
 
         self.checkBox_5 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_5.setObjectName(u"checkBox_5")
 
-        self.StarWords.addWidget(self.checkBox_5, 1, 2, 1, 1)
+        self.StartWords.addWidget(self.checkBox_5, 1, 2, 1, 1)
 
         self.checkBox_7 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_7.setObjectName(u"checkBox_7")
 
-        self.StarWords.addWidget(self.checkBox_7, 2, 0, 1, 1)
+        self.StartWords.addWidget(self.checkBox_7, 2, 0, 1, 1)
 
         self.checkBox_11 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_11.setObjectName(u"checkBox_11")
 
-        self.StarWords.addWidget(self.checkBox_11, 3, 2, 1, 1)
+        self.StartWords.addWidget(self.checkBox_11, 3, 2, 1, 1)
 
         self.checkBox_1 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_1.setObjectName(u"checkBox_1")
 
-        self.StarWords.addWidget(self.checkBox_1, 0, 0, 1, 1)
+        self.StartWords.addWidget(self.checkBox_1, 0, 0, 1, 1)
 
         self.checkBox_10 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_10.setObjectName(u"checkBox_10")
 
-        self.StarWords.addWidget(self.checkBox_10, 3, 0, 1, 1)
+        self.StartWords.addWidget(self.checkBox_10, 3, 0, 1, 1)
 
         self.checkBox_4 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_4.setObjectName(u"checkBox_4")
 
-        self.StarWords.addWidget(self.checkBox_4, 1, 0, 1, 1)
+        self.StartWords.addWidget(self.checkBox_4, 1, 0, 1, 1)
 
         self.checkBox_2 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_2.setObjectName(u"checkBox_2")
 
-        self.StarWords.addWidget(self.checkBox_2, 0, 2, 1, 1)
+        self.StartWords.addWidget(self.checkBox_2, 0, 2, 1, 1)
 
         self.checkBox_13 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_13.setObjectName(u"checkBox_13")
 
-        self.StarWords.addWidget(self.checkBox_13, 4, 0, 1, 1)
+        self.StartWords.addWidget(self.checkBox_13, 4, 0, 1, 1)
 
         self.checkBox_15 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_15.setObjectName(u"checkBox_15")
 
-        self.StarWords.addWidget(self.checkBox_15, 4, 3, 1, 1)
+        self.StartWords.addWidget(self.checkBox_15, 4, 3, 1, 1)
 
         self.checkBox_14 = QCheckBox(self.scrollAreaWidgetContents_2)
         self.checkBox_14.setObjectName(u"checkBox_14")
 
-        self.StarWords.addWidget(self.checkBox_14, 4, 2, 1, 1)
+        self.StartWords.addWidget(self.checkBox_14, 4, 2, 1, 1)
 
 
-        self.verticalLayout_12.addLayout(self.StarWords)
+        self.verticalLayout_12.addLayout(self.StartWords)
+
+        self.verticalLayout_13 = QVBoxLayout()
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
+        self.label_8 = QLabel(self.scrollAreaWidgetContents_2)
+        self.label_8.setObjectName(u"label_8")
+        self.label_8.setTextFormat(Qt.TextFormat.AutoText)
+        self.label_8.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_13.addWidget(self.label_8)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.groupBox_2 = QGroupBox(self.scrollAreaWidgetContents_2)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.verticalLayout_15 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_15.setObjectName(u"verticalLayout_15")
+        self.label_10 = QLabel(self.groupBox_2)
+        self.label_10.setObjectName(u"label_10")
+        self.label_10.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_15.addWidget(self.label_10)
+
+        self.openAI_API = QLineEdit(self.groupBox_2)
+        self.openAI_API.setObjectName(u"openAI_API")
+
+        self.verticalLayout_15.addWidget(self.openAI_API)
+
+
+        self.horizontalLayout.addWidget(self.groupBox_2)
+
+        self.groupBox = QGroupBox(self.scrollAreaWidgetContents_2)
+        self.groupBox.setObjectName(u"groupBox")
+        self.verticalLayout_14 = QVBoxLayout(self.groupBox)
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
+        self.label_9 = QLabel(self.groupBox)
+        self.label_9.setObjectName(u"label_9")
+        self.label_9.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+        self.verticalLayout_14.addWidget(self.label_9)
+
+        self.groqAI_API = QLineEdit(self.groupBox)
+        self.groqAI_API.setObjectName(u"groqAI_API")
+
+        self.verticalLayout_14.addWidget(self.groqAI_API)
+
+
+        self.horizontalLayout.addWidget(self.groupBox)
+
+
+        self.verticalLayout_13.addLayout(self.horizontalLayout)
+
+
+        self.verticalLayout_12.addLayout(self.verticalLayout_13)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_12.addItem(self.verticalSpacer)
+
+        self.line = QFrame(self.scrollAreaWidgetContents_2)
+        self.line.setObjectName(u"line")
+        self.line.setFrameShape(QFrame.Shape.HLine)
+        self.line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_12.addWidget(self.line)
 
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
 
@@ -421,6 +481,11 @@ class Ui_Dialog(object):
         self.checkBox_13.setText(QCoreApplication.translate("Dialog", u"alexa", None))
         self.checkBox_15.setText(QCoreApplication.translate("Dialog", u"ok google", None))
         self.checkBox_14.setText(QCoreApplication.translate("Dialog", u"blueberry", None))
+        self.label_8.setText(QCoreApplication.translate("Dialog", u"AI", None))
+        self.groupBox_2.setTitle("")
+        self.label_10.setText(QCoreApplication.translate("Dialog", u"OpenAI API", None))
+        self.groupBox.setTitle("")
+        self.label_9.setText(QCoreApplication.translate("Dialog", u"GroqAI API", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabWidgetPage1), QCoreApplication.translate("Dialog", u"general", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Discord", None))
         self.discordButton.setText(QCoreApplication.translate("Dialog", u"\u041e\u0431\u0437\u043e\u0440", None))

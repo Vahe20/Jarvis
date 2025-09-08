@@ -1,12 +1,12 @@
 import struct
 import time
 import asyncio
-import sys
 import winreg
+from dotenv import load_dotenv
+import os
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QSystemTrayIcon, QMenu, QFileDialog
 from PySide6.QtGui import QAction, QIcon
-import qasync
 from gui.Jarvis import Ui_MainWindow
 from gui.Settings import Ui_Dialog
 
@@ -15,8 +15,11 @@ import core.speaker as speaker
 import core.jarvis as jarvis
 
 from plagins.window import get_active_window_name
+from plagins.Ai import get_status_gpt
 
 import config
+
+load_dotenv(config.dirPath + "/core/ai_api.env")
 
 APP_NAME = "Jarvis"
 APP_PATH = config.dirPath + "\\Jarvis.bat"
@@ -89,6 +92,10 @@ class SettingsDialog(QDialog):
         self.ui.gtaButton.clicked.connect(lambda: self.choose_path(self.ui.gtaLine))
         self.ui.mineButton.clicked.connect(lambda: self.choose_path(self.ui.mineLine))
         self.ui.vsCodeButton.clicked.connect(lambda: self.choose_path(self.ui.vsCodeLine))
+        
+        
+        self.ui.openAI_API.setText(self.settings.get("openAI_API"))
+        self.ui.groqAI_API.setText(self.settings.get("groqAI_API"))
 
     def choose_path(self, name):
         exe = QFileDialog.getOpenFileName(self, "Выберите исполняемый файл", "", "Исполняемый файл (*.exe)")[0]
@@ -118,6 +125,9 @@ class SettingsDialog(QDialog):
         self.settings["wake word"]["alexa"] = str(self.ui.checkBox_13.isChecked())
         self.settings["wake word"]["blueberry"] = str(self.ui.checkBox_14.isChecked())
         self.settings["wake word"]["ok google"] = str(self.ui.checkBox_15.isChecked())
+        
+        self.settings["openAI_API"] = self.ui.openAI_API.text()
+        self.settings["groqAI_API"] = self.ui.groqAI_API.text()
 
         config.save_settings(self.settings)
         super().accept()
@@ -136,6 +146,9 @@ class ExpenseTracker(QMainWindow):
         self.ui.startButton.clicked.connect(self.toggle_jarvis)
         self.ui.settingsButton.clicked.connect(self.open_settings)
         
+        AI_ok, Ai_info = get_status_gpt()
+        self.ui.aiStatus.setText(f"🤖 Ai: {'✅' if AI_ok else '❌'} {Ai_info}")
+        
         tray_menu = QMenu()
         restore_action = QAction("Открыть", self)
         quit_action = QAction("Выход", self)
@@ -150,6 +163,7 @@ class ExpenseTracker(QMainWindow):
         self.tray_icon.activated.connect(self.on_tray_click)
 
         self.tray_icon.show()
+        
         
     def closeEvent(self, event):
         event.ignore()
@@ -195,7 +209,9 @@ class ExpenseTracker(QMainWindow):
                         result = await jarvis.handle_command(text)
                         if result == "break":
                             break
-                        if result == "exit":
+                        elif result == "thanks":
+                            start_time -= 15
+                        elif result == "exit":
                             self.toggle_jarvis()
                             return
 

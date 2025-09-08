@@ -21,7 +21,7 @@
         "alexa": "False",
         "blueberry": "False",
         "ok google": "False"
-    }
-
+    },
+    "openAI_API": "",
+    "groqAI_API": ""
 }
-

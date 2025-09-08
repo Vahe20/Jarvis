@@ -8,6 +8,7 @@ fuzzywuzzy
 googletrans
 pyautogui
 groq
+openai
 dotenv
 mss
 numpy
@@ -18,4 +19,4 @@ PySide6
 qasync
 pillow
 pyscreeze
-ElevenLabs
+ElevnLabs
