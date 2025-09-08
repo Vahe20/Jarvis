@@ -23,5 +23,6 @@
         "ok google": "False"
     },
     "openAI_API": "",
-    "groqAI_API": ""
+    "groqAI_API": "",
+    "eleven_API": ""
 }

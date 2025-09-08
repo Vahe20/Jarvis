@@ -2,8 +2,6 @@ from vosk import KaldiRecognizer, Model
 import pyaudio, json
 import pvporcupine
 import time
-import numpy as np
-import sounddevice as sd
 
 import config
 

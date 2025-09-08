@@ -1,4 +1,4 @@
-PyAudio
+pyaudio
 pvporcupine
 vosk
 gtts
@@ -8,18 +8,12 @@ fuzzywuzzy
 googletrans
 pyautogui
 groq
-openai
-dotenv
 mss
 numpy
-opencv-python
+opencv
 plyer
 python-Levenshtein
 PySide6
 qasync
 pillow
 pyscreeze
-elevenlabs
-pyjokes
-psutil
-PyGetWindow

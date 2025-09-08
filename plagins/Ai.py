@@ -1,13 +1,7 @@
 from groq import Groq
 from openai import OpenAI
-from dotenv import load_dotenv
-import json
-import os
 
 import config
-
-
-load_dotenv(config.dirPath + "/core/ai_api.env")
 
 # client_Groq = Groq(api_key=os.getenv("groq_API_KEY"))
 settings = config.load_settings()

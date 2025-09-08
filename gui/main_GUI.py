@@ -2,8 +2,6 @@ import struct
 import time
 import asyncio
 import winreg
-from dotenv import load_dotenv
-import os
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QSystemTrayIcon, QMenu, QFileDialog
 from PySide6.QtGui import QAction, QIcon
@@ -18,8 +16,6 @@ from plagins.window import get_active_window_name
 from plagins.Ai import get_status_gpt
 
 import config
-
-load_dotenv(config.dirPath + "/core/ai_api.env")
 
 APP_NAME = "Jarvis"
 APP_PATH = config.dirPath + "\\Jarvis.bat"
@@ -96,6 +92,8 @@ class SettingsDialog(QDialog):
         
         self.ui.openAI_API.setText(self.settings.get("openAI_API"))
         self.ui.groqAI_API.setText(self.settings.get("groqAI_API"))
+        
+        self.ui.eleven_API.setText(self.settings.get("eleven_API"))
 
     def choose_path(self, name):
         exe = QFileDialog.getOpenFileName(self, "Выберите исполняемый файл", "", "Исполняемый файл (*.exe)")[0]
@@ -128,6 +126,8 @@ class SettingsDialog(QDialog):
         
         self.settings["openAI_API"] = self.ui.openAI_API.text()
         self.settings["groqAI_API"] = self.ui.groqAI_API.text()
+        
+        self.settings["eleven_API"] = self.ui.eleven_API.text()
 
         config.save_settings(self.settings)
         super().accept()

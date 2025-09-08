@@ -1,4 +1,3 @@
-import re
 import time
 import threading
 from plyer import notification

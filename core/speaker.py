@@ -1,6 +1,5 @@
 import os
 import threading
-from elevenlabs import stream
 from elevenlabs.client import ElevenLabs
 
 import config
@@ -8,11 +7,11 @@ from gtts import gTTS
 from playsound3 import playsound
 
 
+settings = config.load_settings()
+
 elevenlabs = ElevenLabs(
-    api_key='sk_817e138044d9225bd001c2fcbde26ef50514f36e70b92084',
+    api_key=settings["eleven_API"]
 )
-
-
 
 def speak(text):
     try:

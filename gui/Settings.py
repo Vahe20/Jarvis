@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'settings.ui'
+## Form generated from reading UI file 'Settings.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.9.2
 ##
@@ -27,7 +27,7 @@ class Ui_Dialog(object):
             Dialog.setObjectName(u"Dialog")
         Dialog.resize(487, 646)
         icon = QIcon()
-        icon.addFile(u"../icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"./icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         Dialog.setWindowIcon(icon)
         Dialog.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(81, 0, 135, 255), stop:0.427447 rgba(41, 40, 132, 235), stop:1 rgba(155, 40, 165, 255));\n"
 "color: white;\n"
@@ -213,9 +213,21 @@ class Ui_Dialog(object):
 
         self.verticalLayout_12.addLayout(self.verticalLayout_13)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.verticalLayout_16 = QVBoxLayout()
+        self.verticalLayout_16.setObjectName(u"verticalLayout_16")
+        self.label_11 = QLabel(self.scrollAreaWidgetContents_2)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_12.addItem(self.verticalSpacer)
+        self.verticalLayout_16.addWidget(self.label_11)
+
+        self.eleven_API = QLineEdit(self.scrollAreaWidgetContents_2)
+        self.eleven_API.setObjectName(u"eleven_API")
+
+        self.verticalLayout_16.addWidget(self.eleven_API)
+
+
+        self.verticalLayout_12.addLayout(self.verticalLayout_16)
 
         self.line = QFrame(self.scrollAreaWidgetContents_2)
         self.line.setObjectName(u"line")
@@ -223,6 +235,10 @@ class Ui_Dialog(object):
         self.line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout_12.addWidget(self.line)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_12.addItem(self.verticalSpacer)
 
         self.scrollArea_2.setWidget(self.scrollAreaWidgetContents_2)
 
@@ -486,6 +502,7 @@ class Ui_Dialog(object):
         self.label_10.setText(QCoreApplication.translate("Dialog", u"OpenAI API", None))
         self.groupBox.setTitle("")
         self.label_9.setText(QCoreApplication.translate("Dialog", u"GroqAI API", None))
+        self.label_11.setText(QCoreApplication.translate("Dialog", u"ElevenLabs (\u0440\u0435\u043a\u043e\u043c\u0435\u043d\u0434\u0443\u0435\u0442\u0441\u044f \u0434\u043b\u044f \u043a\u0430\u0447\u0435\u0441\u0442\u0432\u043e \u0437\u0432\u0443\u043a\u0430)", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tabWidgetPage1), QCoreApplication.translate("Dialog", u"general", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Discord", None))
         self.discordButton.setText(QCoreApplication.translate("Dialog", u"\u041e\u0431\u0437\u043e\u0440", None))

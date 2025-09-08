@@ -27,7 +27,7 @@ class Ui_MainWindow(object):
         MainWindow.setMinimumSize(QSize(500, 550))
         MainWindow.setMaximumSize(QSize(500, 550))
         icon = QIcon()
-        icon.addFile(u"../icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"./icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
         MainWindow.setUnifiedTitleAndToolBarOnMac(False)
