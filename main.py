@@ -8,7 +8,6 @@ from gui.main_GUI import ExpenseTracker
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = ExpenseTracker()
-    # window = MainWindow()
     window.show()
 
     loop = qasync.QEventLoop(app)
@@ -17,3 +16,4 @@ if __name__ == "__main__":
     with loop:
 
         loop.run_forever()
+
