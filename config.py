@@ -24,7 +24,6 @@ commands_dict = {
         'openDiscord': ['дискорд', "дискорт", "дискор", "эскорд"],
         'openMinecraft': ["майнкрафт"],
         'screenShot': ['скриншот'],
-        'openMyFolder': ['открой мою папку'],
         'thanks': ['спасибо'],
         'off': ['отключись'],
         'AI': ['скажи'],
@@ -82,4 +81,5 @@ def epicGames():
 
 def gtaRp():
     return load_settings().get("gtaRp")
+
 
