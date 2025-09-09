@@ -3,7 +3,6 @@ from openai import OpenAI
 
 import config
 
-# client_Groq = Groq(api_key=os.getenv("groq_API_KEY"))
 settings = config.load_settings()
 client_Groq = Groq(api_key=settings["groqAI_API"])
 client_OpenAi = OpenAI(api_key=settings["openAI_API"])
