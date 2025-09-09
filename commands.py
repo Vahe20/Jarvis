@@ -60,11 +60,6 @@ def gtaRp(query=None):
     os.startfile(config.gtaRp())
     return openEpicGames()
 
-def openMyFolder(query=None):
-    os.startfile("C:\\Users\\Karen Ghazaryan\\Desktop\\vahei papka\\programming")
-    return random.choice(["Загружаю сэр", "Всегда к вашим услугам сэр", "Запрос выполнен сэр", "К вашим услугам сэр"])
-
-
 def AI(query):
     try:
         asyncio.create_task(run_gpt(query))
@@ -142,3 +137,4 @@ async def jarvis_screen(query):
 
 def executor(funcName, query=None):
     return globals()[funcName](query)
+
