@@ -36,7 +36,7 @@ def get_status_gpt():
             prompt="ping",
             max_tokens=1
         )
-        return True, "OK"
+        return True, "активен"
     except Exception as e1:
         try:
             response = client_Groq.chat.completions.create(
@@ -44,6 +44,6 @@ def get_status_gpt():
                 messages=[{"role": "user", "content": "ping"}],
                 max_tokens=1
             )
-            return True, "OK"
+            return True, "активен"
         except Exception as e2:
             return False, str(e1)

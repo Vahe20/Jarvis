@@ -4,7 +4,8 @@ import asyncio
 import winreg
 
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QSystemTrayIcon, QMenu, QFileDialog
-from PySide6.QtGui import QAction, QIcon
+from PySide6.QtGui import QAction, QIcon, QPainter, QRadialGradient, QColor
+from PySide6.QtCore import Qt
 from gui.Jarvis import Ui_MainWindow
 from gui.Settings import Ui_Dialog
 
@@ -13,7 +14,7 @@ import core.speaker as speaker
 import core.jarvis as jarvis
 
 from plagins.window import get_active_window_name
-from plagins.Ai import get_status_gpt
+
 
 import config
 
@@ -94,6 +95,21 @@ class SettingsDialog(QDialog):
         self.ui.groqAI_API.setText(self.settings.get("groqAI_API"))
         
         self.ui.eleven_API.setText(self.settings.get("eleven_API"))
+        
+    def paintEvent(self, event):
+        painter = QPainter(self)
+
+        # создаём радиальный градиент
+        gradient = QRadialGradient(self.width() / 2, self.height() / 2,
+                                    max(self.width(), self.height()) / 2)
+
+        # центр = #06066b, края = черные
+        gradient.setColorAt(0.0, QColor(6, 6, 107))   # rgba(6, 6, 107, 1)
+        gradient.setColorAt(1.0, QColor(0, 0, 0))     # rgba(0, 0, 0, 1)
+
+        painter.setBrush(gradient)
+        painter.setPen(Qt.NoPen)
+        painter.drawRect(self.rect())
 
     def choose_path(self, name):
         exe = QFileDialog.getOpenFileName(self, "Выберите исполняемый файл", "", "Исполняемый файл (*.exe)")[0]
@@ -141,13 +157,12 @@ class ExpenseTracker(QMainWindow):
         self.jarvis_task = None
 
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon("icons/reactor.png"))
+        self.tray_icon.setIcon(QIcon("./assets/icons/reactor.png"))
         
         self.ui.startButton.clicked.connect(self.toggle_jarvis)
-        self.ui.settingsButton.clicked.connect(self.open_settings)
-        
-        AI_ok, Ai_info = get_status_gpt()
-        self.ui.aiStatus.setText(f"🤖 Ai: {'✅' if AI_ok else '❌'} {Ai_info}")
+        self.ui.settings_btn.clicked.connect(self.open_settings)
+        self.ui.quit_btn.clicked.connect(QApplication.quit)
+        self.ui.hide_btn.clicked.connect(self.close)
         
         tray_menu = QMenu()
         restore_action = QAction("Открыть", self)
@@ -158,33 +173,48 @@ class ExpenseTracker(QMainWindow):
 
         self.tray_icon.setContextMenu(tray_menu)
         
+        
         restore_action.triggered.connect(self.showNormal)
         quit_action.triggered.connect(QApplication.quit)
         self.tray_icon.activated.connect(self.on_tray_click)
 
         self.tray_icon.show()
         
+        speaker.speak_async("Доброе утро")
+        
+        
+        
+        
+        
+    def paintEvent(self, event):
+        painter = QPainter(self)
+
+        gradient = QRadialGradient(self.width() / 2, self.height() / 2,
+                                    max(self.width(), self.height()) / 2)
+
+        gradient.setColorAt(0.0, QColor(6, 6, 107))
+        gradient.setColorAt(1.0, QColor(0, 0, 0))
+
+        painter.setBrush(gradient)
+        painter.setPen(Qt.NoPen)
+        painter.drawRect(self.rect())
+        
         
     def closeEvent(self, event):
-        event.ignore()
         self.hide()
-        self.tray_icon.showMessage(
-        "Jarvis",
-        "Программа продолжает работать в фоне.",
-        QSystemTrayIcon.Information,
-        500
-    )
+        event.ignore()
+        
 
     def on_tray_click(self, reason):
         if reason == QSystemTrayIcon.Trigger:
             self.showNormal()
+            
         
     def open_settings(self):
         self.settings_window = SettingsDialog()
         self.settings_window.show()
 
     async def run_jarvis(self):
-        speaker.speak_async("Доброе утро")
         config.wake_word_update()
 
         while True:            
@@ -219,11 +249,10 @@ class ExpenseTracker(QMainWindow):
 
     def toggle_jarvis(self):
         loop = asyncio.get_event_loop()
+        self.ui.startButton.toggle_animation()
 
         if self.jarvis_task is None or self.jarvis_task.done():
             self.jarvis_task = loop.create_task(self.run_jarvis())
-            self.ui.startButton.setText("Stop Jarvis")
         else:
             self.jarvis_task.cancel()
             self.jarvis_task = None
-            self.ui.startButton.setText("Start Jarvis")

@@ -1,0 +1,88 @@
+#Logo {
+    color: #ffffff;
+    font-size: 20px;
+}
+
+#header_layout QPushButton {
+    background-color: #111111;
+    border: none;
+    border-radius: 20px;
+    color: #00c8ff;
+    font-size: 14px;
+}
+
+QLabel {
+    color: #00c8ff;
+    font-size: 16px;
+}
+
+QPushButton {
+    background-color: #111111;
+    border: 1px solid #00c8ff;
+    border-radius: 8px;
+    color: #00c8ff;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #00c8ff;
+    color: black;
+}
+
+QGroupBox {
+    background-color: #021b33;
+    border: 1px solid #00c8ff;
+    border-radius: 8px;
+    color: #00c8ff;
+}
+
+#system_box QLabel {
+    color: #00c8ff;
+    font-size: 8px;
+}
+
+#Weather_box QLabel {
+    font-size: 20px;
+}
+
+QProgressBar {
+    background-color: #222;
+    border: 1px solid #00c8ff;
+    border-radius: 5px;
+    height: 10px;
+    text-align: center;
+    color: #222;
+    font-size: 1px;
+}
+
+QProgressBar::chunk {
+    background-color: #00c8ff;
+}
+
+#footer_box QToolButton {
+    background-color: transparent;
+    border: none;
+    color: #00c8ff;
+    font-size: 10px;
+}
+
+QDialog QWidget {
+    background-color: transparent;
+    border: none;
+    color: #00c8ff;
+}
+
+QDialog QPushButton {
+    background-color: #111111;
+    border: 1px solid #00c8ff;
+    border-radius: 8px;
+    color: #00c8ff;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
+QDialog QPushButton:hover {
+    background-color: #00c8ff;
+    color: black;
+}

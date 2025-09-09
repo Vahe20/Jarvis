@@ -1,99 +1,133 @@
-# -*- coding: utf-8 -*-
+from PySide6.QtWidgets import QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QToolButton
+from PySide6.QtCore import Qt, QSize, QCoreApplication
+from PySide6.QtGui import QFont, QIcon
 
-################################################################################
-## Form generated from reading UI file 'jarvis.ui'
-##
-## Created by: Qt User Interface Compiler version 6.9.2
-##
-## WARNING! All changes made in this file will be lost when recompiling UI file!
-################################################################################
+from gui.widgets.circular_widget import CircularWidget
+from gui.widgets.system_info import SystemInfoWidget
+from gui.widgets.weather_widget import WeatherWidget
+from gui.widgets.AI_widget import AIWidget
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGroupBox, QHBoxLayout, QLabel,
-    QLayout, QMainWindow, QPushButton, QSizePolicy,
-    QSpacerItem, QWidget)
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
+class Ui_MainWindow(object):  
+    def setupUi(self, MainWindow):  
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(500, 550)
-        MainWindow.setMinimumSize(QSize(500, 550))
-        MainWindow.setMaximumSize(QSize(500, 550))
+        MainWindow.resize(550, 650)
+        MainWindow.setMinimumSize(QSize(550, 650))
+        MainWindow.setMaximumSize(QSize(550, 650))
         icon = QIcon()
-        icon.addFile(u"./icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        icon.addFile(u"./assets/icons/reactor.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         MainWindow.setWindowIcon(icon)
-        MainWindow.setStyleSheet(u"")
-        MainWindow.setUnifiedTitleAndToolBarOnMac(False)
-        self.centralwidget = QWidget(MainWindow)
-        self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setMinimumSize(QSize(500, 550))
-        self.centralwidget.setMaximumSize(QSize(500, 550))
-        self.centralwidget.setStyleSheet(u"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(81, 0, 135, 255), stop:0.427447 rgba(41, 40, 132, 235), stop:1 rgba(155, 40, 165, 255));\n"
-"")
-        self.startButton = QPushButton(self.centralwidget)
-        self.startButton.setObjectName(u"startButton")
-        self.startButton.setGeometry(QRect(150, 120, 201, 191))
-        self.startButton.setAutoFillBackground(False)
-        self.startButton.setStyleSheet(u"border-radius:  90%;\n"
-"background-color: qlineargradient(spread:pad, x1:1, y1:1, x2:0, y2:0, stop:0 rgba(100, 0, 135, 255), stop:0.427447 rgba(81, 40, 132, 235), stop:1 rgba(50, 40, 165, 255));\n"
-"color: white;")
-        self.startButton.setCheckable(True)
-        self.settingsButton = QPushButton(self.centralwidget)
-        self.settingsButton.setObjectName(u"settingsButton")
-        self.settingsButton.setGeometry(QRect(400, 20, 75, 31))
-        self.settingsButton.setStyleSheet(u"color: white;\n"
-"border: solid 1px black;")
-        self.horizontalLayoutWidget = QWidget(self.centralwidget)
-        self.horizontalLayoutWidget.setObjectName(u"horizontalLayoutWidget")
-        self.horizontalLayoutWidget.setGeometry(QRect(0, 420, 501, 111))
-        self.horizontalLayout_3 = QHBoxLayout(self.horizontalLayoutWidget)
-        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setSizeConstraint(QLayout.SizeConstraint.SetDefaultConstraint)
-        self.horizontalLayout_3.setContentsMargins(0, 0, 0, 0)
-        self.horizontalGroupBox = QGroupBox(self.horizontalLayoutWidget)
-        self.horizontalGroupBox.setObjectName(u"horizontalGroupBox")
-        self.horizontalGroupBox.setStyleSheet(u"border: none")
-        self.horizontalLayout = QHBoxLayout(self.horizontalGroupBox)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.horizontalGroupBox_2 = QGroupBox(self.horizontalGroupBox)
-        self.horizontalGroupBox_2.setObjectName(u"horizontalGroupBox_2")
-        self.horizontalGroupBox_2.setStyleSheet(u"color: white;")
-        self.horizontalLayout_2 = QHBoxLayout(self.horizontalGroupBox_2)
-        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.horizontalLayout_2.addItem(self.verticalSpacer)
-
-        self.aiStatus = QLabel(self.horizontalGroupBox_2)
-        self.aiStatus.setObjectName(u"aiStatus")
-        self.aiStatus.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-        self.horizontalLayout_2.addWidget(self.aiStatus)
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Jarvis", None))
+        MainWindow.setWindowFlag(Qt.FramelessWindowHint)
+        MainWindow.setStyleSheet(open("assets/styles.qss", "r").read())
 
 
-        self.horizontalLayout.addWidget(self.horizontalGroupBox_2)
+        # Центральный контейнер
+        self.central = QWidget()
+        self.root_layout = QVBoxLayout(self.central)
+        self.root_layout.setContentsMargins(20, 0, 20, 0)
 
+        # ---------- Верхняя панель ----------
+        self.header_layout = QHBoxLayout()
+        self.header_layout.setObjectName("header_layout")
+        self.Logo = QLabel("JARVIS")
+        self.Logo.setObjectName("Logo")
+        self.Logo.setFont(QFont("Segoe UI", 32))
+        self.Logo.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-        self.horizontalLayout_3.addWidget(self.horizontalGroupBox)
+        # Иконки справа (заглушки)
+        self.settings_btn = QPushButton()
+        self.settings_btn.setIcon(QIcon("./assets/icons/settings.png"))
+        self.quit_btn = QPushButton("✖")
+        self.hide_btn = QPushButton("__")
+        for btn in [self.settings_btn, self.quit_btn, self.hide_btn]:
+            btn.setFixedSize(40, 40)
+            self.header_layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignRight)
 
-        MainWindow.setCentralWidget(self.centralwidget)
+        self.header_layout.insertWidget(0, self.Logo, 1)
+        
 
-        self.retranslateUi(MainWindow)
+        # ---------- Основная часть ----------
+        self.body_layout = QHBoxLayout()
 
-        QMetaObject.connectSlotsByName(MainWindow)
-    # setupUi
+        # Слева: системная информация
+        self.system_box = QGroupBox("система")
+        self.system_box.setObjectName("system_box")
+        self.system_box.setFixedWidth(120)
+        self.system_box.setFixedHeight(120)
 
+        self.system_info = SystemInfoWidget()
+        self.system_info.setFixedWidth(90)
+        self.system_info.setFixedHeight(90)
+        
+        self.box_layout = QVBoxLayout(self.system_box)
+        self.box_layout.addWidget(self.system_info)
+        self.body_layout.addWidget(self.system_box, 1)
+
+        # Центр: круг
+        self.startButton = CircularWidget()
+        self.body_layout.addWidget(self.startButton, 2)
+        
+        # Справа: погода + задачи
+        self.right_layout = QVBoxLayout()
+        
+        self.Weather_box = QGroupBox("погода")
+        self.Weather_box.setObjectName("Weather_box")
+        self.Weather_box.setFixedWidth(110)
+        self.Weather_box.setFixedHeight(110)
+        
+        self.Weather_info = WeatherWidget()
+        self.Weather_info.setFixedWidth(90)
+        self.Weather_info.setFixedHeight(90)
+        
+        self.Weather_box_layout = QVBoxLayout(self.Weather_box)
+        self.Weather_box_layout.addWidget(self.Weather_info)
+        self.right_layout.addWidget(self.Weather_box, 1)
+        
+        self.AI_box = QGroupBox("AI статус")
+        self.AI_box.setObjectName("AI_box")
+        self.AI_box.setFixedWidth(110)
+        self.AI_box.setFixedHeight(110)
+        
+        self.AI_info = AIWidget()
+        self.AI_info.setFixedWidth(90)
+        self.AI_info.setFixedHeight(90)
+        
+        self.AI_box_layout = QVBoxLayout(self.AI_box)
+        self.AI_box_layout.addWidget(self.AI_info)
+        self.right_layout.addWidget(self.AI_box, 1)
+        
+        self.body_layout.addLayout(self.right_layout, 1)
+        
+        self.body_layout.setContentsMargins(0, 80, 0, 80)
+
+        # ---------- Нижняя панель ----------        
+        self.footer_layout = QHBoxLayout()
+        self.footer_layout.setObjectName("footer_layout")
+        self.footer_box = QGroupBox()
+        self.footer_box.setObjectName("footer_box")
+        self.footer_box.setFixedWidth(300)
+        self.footer_box.setFixedHeight(70)
+        self.footer_layout.addWidget(self.footer_box, alignment=Qt.AlignmentFlag.AlignRight)
+        
+        self.footer_box_layout = QHBoxLayout(self.footer_box)
+        
+        for b in ["Notes"]:
+            btn = QToolButton()
+            btn.setText(b)
+            btn.setIcon(QIcon(f"./assets/icons/{b}.png"))
+            btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+            btn.setMinimumHeight(50)
+            self.footer_box_layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignRight)
+
+        # ---------- Сборка ----------
+        self.root_layout.addLayout(self.header_layout)
+        self.root_layout.addLayout(self.body_layout, 5)
+        self.root_layout.addLayout(self.footer_layout)
+
+        MainWindow.setCentralWidget(self.central)
+        
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Jarvis", None))
-        self.startButton.setText(QCoreApplication.translate("MainWindow", u"On/Off", None))
-        self.settingsButton.setText(QCoreApplication.translate("MainWindow", u"Settings", None))
-        self.aiStatus.setText(QCoreApplication.translate("MainWindow", u"AI Off", None))
-    # retranslateUi
 

@@ -60,6 +60,10 @@ def gtaRp(query=None):
     os.startfile(config.gtaRp())
     return openEpicGames()
 
+def openMyFolder(query=None):
+    os.startfile("C:\\Users\\Karen Ghazaryan\\Desktop\\vahei papka\\programming")
+    return random.choice(["Загружаю сэр", "Всегда к вашим услугам сэр", "Запрос выполнен сэр", "К вашим услугам сэр"])
+
 
 def AI(query):
     try:
@@ -82,6 +86,7 @@ def time(query=None):
     return datetime.datetime.now().strftime("%H:%M:%S")
 
 def diagnose(query=None):
+    
     return diagnose_pc() 
 
 def anecdote(query=None):
