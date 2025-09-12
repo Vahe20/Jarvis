@@ -1,10 +1,10 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel
-from PySide6.QtCore import QTimer, QThread, Signal
+from PySide6.QtCore import QThread, Signal
 from plagins.Ai import get_status_gpt
 
 
 class AIThread(QThread):
-    status_ready = Signal(bool, str)  # AI_ok, Ai_info
+    status_ready = Signal(bool, str)
 
     def run(self):
         try:
@@ -22,18 +22,18 @@ class AIWidget(QWidget):
         self.content = QLabel("Загрузка статуса AI...")
         layout.addWidget(self.content)
 
-        # первый запуск
-        self.update_info()
-
-        # обновление каждые 10 секунд
-        self.timer = QTimer(self)
-        self.timer.timeout.connect(self.update_info)
-        self.timer.start(10000)
-
-    def update_info(self):
+        # создаём поток
         self.thread = AIThread()
         self.thread.status_ready.connect(self.update_label)
+
+        # запускаем только один раз
         self.thread.start()
 
     def update_label(self, AI_ok, Ai_info):
         self.content.setText(f"{'✅' if AI_ok else '❌'} {Ai_info}")
+
+    def closeEvent(self, event):
+        if self.thread.isRunning():
+            self.thread.quit()
+            self.thread.wait()
+        super().closeEvent(event)

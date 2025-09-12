@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QProgressBar
-from PySide6.QtCore import QThread, QObject, Signal
-import psutil, time
+from PySide6.QtCore import QThread, QObject, Signal, QTimer
+import psutil
 
 
 class SystemInfoWorker(QObject):
@@ -8,22 +8,28 @@ class SystemInfoWorker(QObject):
 
     def __init__(self):
         super().__init__()
-        self._running = True
         self.prev_net = psutil.net_io_counters().bytes_recv
+        self.timer = None
 
-    def run(self):
-        while self._running:
-            cpu = psutil.cpu_percent()
-            ram = psutil.virtual_memory().percent
-            net = psutil.net_io_counters().bytes_recv
-            net_speed = (net - self.prev_net) / 1024
-            self.prev_net = net
+    def start(self):
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.update_stats)
+        self.timer.start(1000)
 
-            self.updated.emit(cpu, ram, net_speed)
-            time.sleep(1)  # обновление раз в секунду
+    def update_stats(self):
+        cpu = psutil.cpu_percent()
+        ram = psutil.virtual_memory().percent
+        net = psutil.net_io_counters().bytes_recv
+        net_speed = (net - self.prev_net) / 1024  # KB/s
+        self.prev_net = net
+
+        self.updated.emit(cpu, ram, net_speed)
 
     def stop(self):
-        self._running = False
+        if self.timer:
+            self.timer.stop()
+            self.timer.deleteLater()
+            self.timer = None
 
 
 class SystemInfoWidget(QWidget):
@@ -47,19 +53,15 @@ class SystemInfoWidget(QWidget):
         layout.addWidget(self.net_label)
         layout.addWidget(self.net_bar)
 
-        # создаём поток и воркер
         self.thread = QThread()
         self.worker = SystemInfoWorker()
         self.worker.moveToThread(self.thread)
 
-        # соединяем сигнал с методом обновления UI
         self.worker.updated.connect(self.update_info)
 
-        # запускаем воркер в отдельном потоке
-        self.thread.started.connect(self.worker.run)
+        self.thread.started.connect(self.worker.start)
         self.thread.start()
-        
-        
+
     def update_info(self, cpu, ram, net_speed):
         self.cpu_bar.setValue(int(cpu))
         self.ram_bar.setValue(int(ram))
@@ -67,7 +69,7 @@ class SystemInfoWidget(QWidget):
 
         self.cpu_label.setText(f"CPU:\t {cpu:.1f}%")
         self.ram_label.setText(f"RAM:\t {ram:.1f}%")
-        self.net_label.setText(f"NET:\t {net_speed:.2f} kb/s")
+        self.net_label.setText(f"NET:\t {net_speed:.2f} KB/s")
 
     def closeEvent(self, event):
         self.worker.stop()
