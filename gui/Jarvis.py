@@ -41,13 +41,10 @@ class Ui_MainWindow(object):
         MainWindow.setWindowFlag(Qt.FramelessWindowHint)
         MainWindow.setStyleSheet(open("assets/styles.qss", "r").read())
 
-
-        # Центральный контейнер
         self.central = QWidget()
         self.root_layout = QVBoxLayout(self.central)
         self.root_layout.setContentsMargins(20, 0, 20, 0)
 
-        # ---------- Верхняя панель ----------
         self.header = DraggableHeader(MainWindow)
         self.header.setContentsMargins(20, 20, 20, 0)
         self.header_layout = QHBoxLayout(self.header)
@@ -57,7 +54,6 @@ class Ui_MainWindow(object):
         self.Logo.setFont(QFont("Segoe UI", 32))
         self.Logo.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
 
-        # Иконки справа (заглушки)
         self.settings_btn = QPushButton()
         self.settings_btn.setIcon(QIcon("./assets/icons/settings.png"))
         self.quit_btn = QPushButton("✖")
@@ -68,11 +64,8 @@ class Ui_MainWindow(object):
 
         self.header_layout.insertWidget(0, self.Logo, 1)
         
-
-        # ---------- Основная часть ----------
         self.body_layout = QHBoxLayout()
 
-        # Слева: системная информация
         self.system_box = QGroupBox("система")
         self.system_box.setObjectName("system_box")
         self.system_box.setFixedWidth(120)
@@ -86,11 +79,9 @@ class Ui_MainWindow(object):
         self.box_layout.addWidget(self.system_info)
         self.body_layout.addWidget(self.system_box, alignment=Qt.AlignmentFlag.AlignBottom, stretch=1)
 
-        # Центр: круг
         self.startButton = CircularWidget()
         self.body_layout.addWidget(self.startButton, 2)
         
-        # Справа: погода + задачи
         self.right_layout = QVBoxLayout()
         
         self.Weather_box = QGroupBox("погода")
@@ -123,7 +114,6 @@ class Ui_MainWindow(object):
         
         self.body_layout.setContentsMargins(0, 0, 0, 120)
 
-        # ---------- Нижняя панель ----------        
         self.footer_layout = QHBoxLayout()
         self.footer_layout.setObjectName("footer_layout")
         self.footer_layout.setContentsMargins(0, 0, 20, 20)
@@ -148,9 +138,6 @@ class Ui_MainWindow(object):
         self.Tasks_btn.setMinimumHeight(50)
         self.footer_box_layout.addWidget(self.Tasks_btn, alignment=Qt.AlignmentFlag.AlignRight)
         
-
-        
-        # ---------- Сборка ----------
         self.root_layout.addWidget(self.header, alignment=Qt.AlignmentFlag.AlignTop)
         self.root_layout.addLayout(self.body_layout, 5)
         self.root_layout.addLayout(self.footer_layout)

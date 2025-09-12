@@ -22,7 +22,7 @@ import config.commands as commands
 import config.program_finder as program_finder
 
 APP_NAME = "Jarvis"
-APP_PATH = commands.dirPath + "\\Jarvis.bat"
+APP_PATH = "\"" + commands.dirPath + "\\Jarvis.bat" + "\""
 
 def is_autorun_enabled():
     try:
@@ -213,6 +213,7 @@ class ExpenseTracker(QMainWindow):
 
     def on_tray_click(self, reason):
         if reason == QSystemTrayIcon.Trigger:
+            self.ui.Weather_info.update_weather()
             self.showNormal()
             
         
