@@ -2,20 +2,20 @@ import os
 import threading
 from elevenlabs.client import ElevenLabs
 
-import config
+import config.commands as commands
 from gtts import gTTS
 from playsound3 import playsound
 
 
-settings = config.load_settings()
+settings = commands.load_settings()
 
 elevenlabs = ElevenLabs(
-    api_key=settings["eleven_API"]
+    api_key=settings["API"]["eleven_API"]
 )
 
 def speak(text):
     try:
-        playsound(config.sounds + "\\" + text + ".wav")
+        playsound(commands.sounds + "\\" + text + ".wav")
     except:
         try:
             audio_stream = elevenlabs.text_to_speech.stream(
@@ -29,12 +29,19 @@ def speak(text):
                         f.write(chunk)
 
             playsound("audio.wav")
-            os.remove(config.dirPath + "\\audio.wav")
         except:
             tts = gTTS(text=text, lang="ru", slow=False)
-            tts.save(config.dirPath + "\\audio.mp3")
-            playsound(config.dirPath + "\\audio.mp3")
-            os.remove(config.dirPath + "\\audio.mp3")
+            tts.save(commands.dirPath + "\\audio.mp3")
+            playsound(commands.dirPath + "\\audio.mp3")
+        finally:
+            try:
+                os.remove(commands.dirPath + "\\audio.wav")
+            except FileNotFoundError:
+                pass
+            try:
+                os.remove(commands.dirPath + "\\audio.mp3")
+            except FileNotFoundError:
+                pass
 
 
 def speak_async(text):

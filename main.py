@@ -14,6 +14,4 @@ if __name__ == "__main__":
     asyncio.set_event_loop(loop)
 
     with loop:
-
         loop.run_forever()
-

@@ -3,15 +3,15 @@ import pyaudio, json
 import pvporcupine
 import time
 
-import config
+import config.commands as commands
 
 
-vosk_model = Model(config.dirPath + "/core/vosk-model")
-buffer = ["стиль", "код", "эпик"]
+vosk_model = Model(commands.dirPath + "/core/vosk-model")
+buffer = ["стиль", "код", "эпик", ""]
 
 porcupine = pvporcupine.create(
-    access_key=config.ACCESS_KEY,
-    keywords=[].copy() + config.wake_word_update()
+    access_key=commands.ACCESS_KEY,
+    keywords=[].copy() + commands.wake_word_update()
 )
 
 pa = pyaudio.PyAudio()

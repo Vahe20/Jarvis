@@ -30,6 +30,15 @@ QPushButton:hover {
     color: black;
 }
 
+QLineEdit {
+    background-color: #111111;
+    border: 1px solid #00c8ff;
+    border-radius: 8px;
+    color: #00c8ff;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+
 QGroupBox {
     background-color: #021b33;
     border: 1px solid #00c8ff;
@@ -83,6 +92,22 @@ QDialog QPushButton {
 }
 
 QDialog QPushButton:hover {
+    background-color: #00c8ff;
+    color: black;
+}
+
+QScrollArea { border: none; background: transparent; }
+QScrollArea QWidget#tasks_container { background: transparent; padding: 8px; }
+QScrollArea QWidget#tasks_container QLabel { color: #00c8ff; }
+QScrollArea QWidget#tasks_container QPushButton {
+    background-color: #111111;
+    border: 1px solid #00c8ff;
+    border-radius: 8px;
+    color: #00c8ff;
+    padding: 8px 12px;
+    font-size: 14px;
+}
+QScrollArea QWidget#tasks_container QPushButton:hover {
     background-color: #00c8ff;
     color: black;
 }

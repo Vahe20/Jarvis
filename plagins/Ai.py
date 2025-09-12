@@ -1,27 +1,28 @@
 from groq import Groq
 from openai import OpenAI
 
-import config
+import config.commands as commands
 
-settings = config.load_settings()
-client_Groq = Groq(api_key=settings["groqAI_API"])
-client_OpenAi = OpenAI(api_key=settings["openAI_API"])
+settings = commands.load_settings()
+client_Groq = Groq(api_key=settings["API"]["groqAI_API"])
+client_OpenAi = OpenAI(api_key=settings["API"]["openAI_API"])
 
 
 def ask_gpt(prompt: str):
     try:
         response = client_OpenAi.Completion.create(
-            model="text-davinci-003",
+            model="gpt-5-mini",
             prompt=prompt,
             temperature=0.7,
-            max_tokens=512
+            max_tokens=512,
+            stop=None
         )
         return response.choices[0].text.strip()
     except Exception as e:
         response = client_Groq.chat.completions.create(
             model="llama-3.3-70b-versatile",
             messages=[
-                {"role": "system", "content": "Ты — помощник."},
+                {"role": "system", "content": "Ты — помощник, который отвечает коротким ответами."},
                 {"role": "user", "content": prompt}
             ],
             temperature=0.7
@@ -33,7 +34,8 @@ def get_status_gpt():
         response = client_OpenAi.Completion.create(
             model="text-davinci-003",
             prompt="ping",
-            max_tokens=1
+            max_tokens=1,
+            stop=None
         )
         return True, "активен"
     except Exception as e1:
@@ -45,4 +47,6 @@ def get_status_gpt():
             )
             return True, "активен"
         except Exception as e2:
+            print(e1, e2)
             return False, str(e1)
+

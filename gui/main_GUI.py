@@ -6,8 +6,10 @@ import winreg
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog, QSystemTrayIcon, QMenu, QFileDialog
 from PySide6.QtGui import QAction, QIcon, QPainter, QRadialGradient, QColor
 from PySide6.QtCore import Qt
+
 from gui.Jarvis import Ui_MainWindow
 from gui.Settings import Ui_Dialog
+from gui.TaskManager import TaskManager
 
 import core.recognizer as recognizer
 import core.speaker as speaker
@@ -16,10 +18,11 @@ import core.jarvis as jarvis
 from plagins.window import get_active_window_name
 
 
-import config
+import config.commands as commands
+import config.program_finder as program_finder
 
 APP_NAME = "Jarvis"
-APP_PATH = config.dirPath + "\\Jarvis.bat"
+APP_PATH = commands.dirPath + "\\Jarvis.bat"
 
 def is_autorun_enabled():
     try:
@@ -43,6 +46,9 @@ def enable_autorun(enable: bool):
         except FileNotFoundError:
             pass
     reg_key.Close()
+    
+        
+
 
 class SettingsDialog(QDialog):
     def __init__(self):
@@ -53,35 +59,36 @@ class SettingsDialog(QDialog):
         
         self.ui.saveButton.clicked.connect(lambda: self.accept())
         
-        self.settings = config.load_settings()
+        self.settings = commands.load_settings()
         
         self.ui.autoStartBtn.setChecked(is_autorun_enabled())
 
         self.ui.autoStartBtn.toggled.connect(enable_autorun)
         
-        self.ui.checkBox_1.setChecked(self.ui.checkBox_1.text() in config.START_WORD)
-        self.ui.checkBox_2.setChecked(self.ui.checkBox_2.text() in config.START_WORD)
-        self.ui.checkBox_3.setChecked(self.ui.checkBox_3.text() in config.START_WORD)
-        self.ui.checkBox_4.setChecked(self.ui.checkBox_4.text() in config.START_WORD)
-        self.ui.checkBox_5.setChecked(self.ui.checkBox_5.text() in config.START_WORD)
-        self.ui.checkBox_6.setChecked(self.ui.checkBox_6.text() in config.START_WORD)
-        self.ui.checkBox_7.setChecked(self.ui.checkBox_7.text() in config.START_WORD)
-        self.ui.checkBox_8.setChecked(self.ui.checkBox_8.text() in config.START_WORD)
-        self.ui.checkBox_9.setChecked(self.ui.checkBox_9.text() in config.START_WORD)
-        self.ui.checkBox_10.setChecked(self.ui.checkBox_10.text() in config.START_WORD)
-        self.ui.checkBox_11.setChecked(self.ui.checkBox_11.text() in config.START_WORD)
-        self.ui.checkBox_12.setChecked(self.ui.checkBox_12.text() in config.START_WORD)
-        self.ui.checkBox_13.setChecked(self.ui.checkBox_13.text() in config.START_WORD)
-        self.ui.checkBox_14.setChecked(self.ui.checkBox_14.text() in config.START_WORD)
-        self.ui.checkBox_15.setChecked(self.ui.checkBox_15.text() in config.START_WORD)
+        self.ui.checkBox_1.setChecked(self.ui.checkBox_1.text() in commands.START_WORD)
+        self.ui.checkBox_2.setChecked(self.ui.checkBox_2.text() in commands.START_WORD)
+        self.ui.checkBox_3.setChecked(self.ui.checkBox_3.text() in commands.START_WORD)
+        self.ui.checkBox_4.setChecked(self.ui.checkBox_4.text() in commands.START_WORD)
+        self.ui.checkBox_5.setChecked(self.ui.checkBox_5.text() in commands.START_WORD)
+        self.ui.checkBox_6.setChecked(self.ui.checkBox_6.text() in commands.START_WORD)
+        self.ui.checkBox_7.setChecked(self.ui.checkBox_7.text() in commands.START_WORD)
+        self.ui.checkBox_8.setChecked(self.ui.checkBox_8.text() in commands.START_WORD)
+        self.ui.checkBox_9.setChecked(self.ui.checkBox_9.text() in commands.START_WORD)
+        self.ui.checkBox_10.setChecked(self.ui.checkBox_10.text() in commands.START_WORD)
+        self.ui.checkBox_11.setChecked(self.ui.checkBox_11.text() in commands.START_WORD)
+        self.ui.checkBox_12.setChecked(self.ui.checkBox_12.text() in commands.START_WORD)
+        self.ui.checkBox_13.setChecked(self.ui.checkBox_13.text() in commands.START_WORD)
+        self.ui.checkBox_14.setChecked(self.ui.checkBox_14.text() in commands.START_WORD)
+        self.ui.checkBox_15.setChecked(self.ui.checkBox_15.text() in commands.START_WORD)
                 
         
-        self.ui.steamLine.setText(self.settings.get("steam"))
-        self.ui.epicLine.setText(self.settings.get("epicGames"))
-        self.ui.discordLine.setText(self.settings.get("discord"))
-        self.ui.gtaLine.setText(self.settings.get("gtaRp"))
-        self.ui.mineLine.setText(self.settings.get("minecraft"))
-        self.ui.vsCodeLine.setText(self.settings.get("vsCode"))
+        self.ui.steamLine.setText(program_finder.get_program_path("steam", "steam.exe"))
+        self.ui.epicLine.setText(program_finder.get_program_path("epicGames", "EpicGamesLauncher.exe"))
+        self.ui.discordLine.setText(program_finder.get_program_path("discord", "Update.exe"))
+        self.ui.gtaLine.setText(program_finder.get_program_path("gtaRp", "GTA5.exe"))
+        self.ui.mineLine.setText(program_finder.get_program_path("minecraft", "TLauncher.exe"))
+        self.ui.vsCodeLine.setText(program_finder.get_program_path("vsCode", "Code.exe"))
+        
 
         self.ui.steamButton.clicked.connect(lambda: self.choose_path(self.ui.steamLine))
         self.ui.epicButton.clicked.connect(lambda: self.choose_path(self.ui.epicLine))
@@ -91,10 +98,10 @@ class SettingsDialog(QDialog):
         self.ui.vsCodeButton.clicked.connect(lambda: self.choose_path(self.ui.vsCodeLine))
         
         
-        self.ui.openAI_API.setText(self.settings.get("openAI_API"))
-        self.ui.groqAI_API.setText(self.settings.get("groqAI_API"))
+        self.ui.openAI_API.setText(self.settings["API"].get("openAI_API"))
+        self.ui.groqAI_API.setText(self.settings["API"].get("groqAI_API"))
         
-        self.ui.eleven_API.setText(self.settings.get("eleven_API"))
+        self.ui.eleven_API.setText(self.settings["API"].get("eleven_API"))
         
     def paintEvent(self, event):
         painter = QPainter(self)
@@ -117,12 +124,12 @@ class SettingsDialog(QDialog):
             name.setText(exe)
 
     def accept(self):
-        self.settings["steam"] = self.ui.steamLine.text()
-        self.settings["epicGames"] = self.ui.epicLine.text()
-        self.settings["discord"] = self.ui.discordLine.text()
-        self.settings["gtaRp"] = self.ui.gtaLine.text()
-        self.settings["minecraft"] = self.ui.mineLine.text()
-        self.settings["vsCode"] = self.ui.vsCodeLine.text()
+        self.settings["directories"]["steam"] = self.ui.steamLine.text()
+        self.settings["directories"]["epicGames"] = self.ui.epicLine.text()
+        self.settings["directories"]["discord"] = self.ui.discordLine.text()
+        self.settings["directories"]["gtaRp"] = self.ui.gtaLine.text()
+        self.settings["directories"]["minecraft"] = self.ui.mineLine.text()
+        self.settings["directories"]["vsCode"] = self.ui.vsCodeLine.text()
         
         self.settings["wake word"]["hey google"] = str(self.ui.checkBox_1.isChecked())
         self.settings["wake word"]["hey siri"] = str(self.ui.checkBox_2.isChecked())
@@ -140,12 +147,12 @@ class SettingsDialog(QDialog):
         self.settings["wake word"]["blueberry"] = str(self.ui.checkBox_14.isChecked())
         self.settings["wake word"]["ok google"] = str(self.ui.checkBox_15.isChecked())
         
-        self.settings["openAI_API"] = self.ui.openAI_API.text()
-        self.settings["groqAI_API"] = self.ui.groqAI_API.text()
+        self.settings["API"]["openAI_API"] = self.ui.openAI_API.text()
+        self.settings["API"]["groqAI_API"] = self.ui.groqAI_API.text()
         
-        self.settings["eleven_API"] = self.ui.eleven_API.text()
+        self.settings["API"]["eleven_API"] = self.ui.eleven_API.text()
 
-        config.save_settings(self.settings)
+        commands.save_settings(self.settings)
         super().accept()
 
 class ExpenseTracker(QMainWindow):
@@ -164,6 +171,8 @@ class ExpenseTracker(QMainWindow):
         self.ui.quit_btn.clicked.connect(QApplication.quit)
         self.ui.hide_btn.clicked.connect(self.close)
         
+        self.ui.Tasks_btn.clicked.connect(self.open_TaskManager)
+        
         tray_menu = QMenu()
         restore_action = QAction("Открыть", self)
         quit_action = QAction("Выход", self)
@@ -181,9 +190,6 @@ class ExpenseTracker(QMainWindow):
         self.tray_icon.show()
         
         speaker.speak_async("Доброе утро")
-        
-        
-        
         
         
     def paintEvent(self, event):
@@ -213,9 +219,13 @@ class ExpenseTracker(QMainWindow):
     def open_settings(self):
         self.settings_window = SettingsDialog()
         self.settings_window.show()
+        
+    def open_TaskManager(self):
+        self.task_manager = TaskManager()
+        self.task_manager.show()
 
     async def run_jarvis(self):
-        config.wake_word_update()
+        commands.wake_word_update()
 
         while True:            
             pcm = recognizer.stream.read(
@@ -232,15 +242,15 @@ class ExpenseTracker(QMainWindow):
                 start_time = time.time()
                 while time.time() - start_time < 10:
                     query = recognizer.listen()
-                    print(f"[Команда]: {query.get('alternatives', [])[0]['text']}")
                     
                     for alt in query.get("alternatives", []):
                         text = alt["text"].lower()
                         result = await jarvis.handle_command(text)
                         if result == "break":
-                            break
-                        elif result == "thanks":
                             start_time -= 15
+                            break
+                        elif result == "continue":
+                            break
                         elif result == "exit":
                             self.toggle_jarvis()
                             return

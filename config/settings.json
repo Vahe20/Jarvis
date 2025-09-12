@@ -1,0 +1,27 @@
+{
+    "directories": {
+
+    },
+    "wake word": {
+        "hey google": "False",
+        "hey siri": "False",
+        "americano": "False",
+        "hey barista": "False",
+        "computer": "False",
+        "grapefruit": "False",
+        "grasshopper": "False",
+        "jarvis": "True",
+        "terminator": "False",
+        "picovoice": "False",
+        "bumblebee": "False",
+        "porcupine": "False",
+        "alexa": "False",
+        "blueberry": "False",
+        "ok google": "False"
+    },
+    "API": {
+        "openAI_API": "",
+        "groqAI_API": "",
+        "eleven_API": ""
+    }
+}

@@ -1,11 +1,30 @@
 from PySide6.QtWidgets import QWidget, QGroupBox, QVBoxLayout, QHBoxLayout, QLabel, QPushButton, QToolButton
 from PySide6.QtCore import Qt, QSize, QCoreApplication
+from PySide6.QtCore import Qt, QSize, QCoreApplication
 from PySide6.QtGui import QFont, QIcon
 
 from gui.widgets.circular_widget import CircularWidget
 from gui.widgets.system_info import SystemInfoWidget
 from gui.widgets.weather_widget import WeatherWidget
 from gui.widgets.AI_widget import AIWidget
+
+class DraggableHeader(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._mouse_pos = None
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self._mouse_pos = event.globalPosition().toPoint()
+
+    def mouseMoveEvent(self, event):
+        if self._mouse_pos:
+            diff = event.globalPosition().toPoint() - self._mouse_pos
+            self.window().move(self.window().pos() + diff)
+            self._mouse_pos = event.globalPosition().toPoint()
+
+    def mouseReleaseEvent(self, event):
+        self._mouse_pos = None
 
 
 class Ui_MainWindow(object):  
@@ -29,7 +48,9 @@ class Ui_MainWindow(object):
         self.root_layout.setContentsMargins(20, 0, 20, 0)
 
         # ---------- Верхняя панель ----------
-        self.header_layout = QHBoxLayout()
+        self.header = DraggableHeader(MainWindow)
+        self.header.setContentsMargins(20, 20, 20, 0)
+        self.header_layout = QHBoxLayout(self.header)
         self.header_layout.setObjectName("header_layout")
         self.Logo = QLabel("JARVIS")
         self.Logo.setObjectName("Logo")
@@ -63,7 +84,7 @@ class Ui_MainWindow(object):
         
         self.box_layout = QVBoxLayout(self.system_box)
         self.box_layout.addWidget(self.system_info)
-        self.body_layout.addWidget(self.system_box, 1)
+        self.body_layout.addWidget(self.system_box, alignment=Qt.AlignmentFlag.AlignBottom, stretch=1)
 
         # Центр: круг
         self.startButton = CircularWidget()
@@ -83,7 +104,7 @@ class Ui_MainWindow(object):
         
         self.Weather_box_layout = QVBoxLayout(self.Weather_box)
         self.Weather_box_layout.addWidget(self.Weather_info)
-        self.right_layout.addWidget(self.Weather_box, 1)
+        self.right_layout.addWidget(self.Weather_box)
         
         self.AI_box = QGroupBox("AI статус")
         self.AI_box.setObjectName("AI_box")
@@ -96,33 +117,41 @@ class Ui_MainWindow(object):
         
         self.AI_box_layout = QVBoxLayout(self.AI_box)
         self.AI_box_layout.addWidget(self.AI_info)
-        self.right_layout.addWidget(self.AI_box, 1)
+        self.right_layout.addWidget(self.AI_box)
         
         self.body_layout.addLayout(self.right_layout, 1)
         
-        self.body_layout.setContentsMargins(0, 80, 0, 80)
+        self.body_layout.setContentsMargins(0, 0, 0, 120)
 
         # ---------- Нижняя панель ----------        
         self.footer_layout = QHBoxLayout()
         self.footer_layout.setObjectName("footer_layout")
+        self.footer_layout.setContentsMargins(0, 0, 20, 20)
         self.footer_box = QGroupBox()
         self.footer_box.setObjectName("footer_box")
-        self.footer_box.setFixedWidth(300)
         self.footer_box.setFixedHeight(70)
         self.footer_layout.addWidget(self.footer_box, alignment=Qt.AlignmentFlag.AlignRight)
         
         self.footer_box_layout = QHBoxLayout(self.footer_box)
         
-        for b in ["Notes"]:
-            btn = QToolButton()
-            btn.setText(b)
-            btn.setIcon(QIcon(f"./assets/icons/{b}.png"))
-            btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-            btn.setMinimumHeight(50)
-            self.footer_box_layout.addWidget(btn, alignment=Qt.AlignmentFlag.AlignRight)
+        self.Timer_btn = QToolButton()
+        self.Timer_btn.setText("таймер")
+        self.Timer_btn.setIcon(QIcon(f"./assets/icons/{"Timer"}.png"))
+        self.Timer_btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.Timer_btn.setMinimumHeight(50)
+        self.footer_box_layout.addWidget(self.Timer_btn, alignment=Qt.AlignmentFlag.AlignRight)
+    
+        self.Tasks_btn = QToolButton()
+        self.Tasks_btn.setText("задачи")
+        self.Tasks_btn.setIcon(QIcon(f"./assets/icons/{"Tasks"}.png"))
+        self.Tasks_btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.Tasks_btn.setMinimumHeight(50)
+        self.footer_box_layout.addWidget(self.Tasks_btn, alignment=Qt.AlignmentFlag.AlignRight)
+        
 
+        
         # ---------- Сборка ----------
-        self.root_layout.addLayout(self.header_layout)
+        self.root_layout.addWidget(self.header, alignment=Qt.AlignmentFlag.AlignTop)
         self.root_layout.addLayout(self.body_layout, 5)
         self.root_layout.addLayout(self.footer_layout)
 
