@@ -26,10 +26,7 @@ class WeatherWidget(QWidget):
             match_temp = re.search(r"(-?\d+)", data)
             temperature = match_temp.group(1) if match_temp else "?"
 
-            parts = data.split()
-            description = parts[-1] if len(parts) > 1 else "Нет данных"
-
-            self.label.setText(f"{temperature}°C\n{description}")
+            self.label.setText(f"{temperature}°C")
 
         except requests.exceptions.RequestException as e:
             self.label.setText("Ошибка: нет соединения")
