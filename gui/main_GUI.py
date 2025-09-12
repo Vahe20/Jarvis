@@ -168,7 +168,7 @@ class ExpenseTracker(QMainWindow):
         
         self.ui.startButton.clicked.connect(self.toggle_jarvis)
         self.ui.settings_btn.clicked.connect(self.open_settings)
-        self.ui.quit_btn.clicked.connect(QApplication.quit)
+        self.ui.quit_btn.clicked.connect(self.quit_app)
         self.ui.hide_btn.clicked.connect(self.close)
         
         self.ui.Tasks_btn.clicked.connect(self.open_TaskManager)
@@ -215,7 +215,21 @@ class ExpenseTracker(QMainWindow):
         if reason == QSystemTrayIcon.Trigger:
             self.ui.Weather_info.update_weather()
             self.showNormal()
+
+        elif reason == QSystemTrayIcon.Context:
+            pass
+
+        elif reason == QSystemTrayIcon.DoubleClick:
+            self.showNormal()
+
+        elif reason == QSystemTrayIcon.MiddleClick:
+            pass
             
+    def quit_app(self):
+        self.ui.system_info.worker.stop()
+        self.ui.system_info.thread.quit()
+        self.ui.system_info.thread.wait()
+        QApplication.quit()
         
     def open_settings(self):
         self.settings_window = SettingsDialog()
