@@ -124,6 +124,20 @@ class Ui_MainWindow(object):
         
         self.footer_box_layout = QHBoxLayout(self.footer_box)
         
+        self.Doc_btn = QToolButton()
+        self.Doc_btn.setText("документация")
+        self.Doc_btn.setIcon(QIcon(f"./assets/icons/{"doc"}.png"))
+        self.Doc_btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.Doc_btn.setMinimumHeight(50)
+        self.footer_box_layout.addWidget(self.Doc_btn, alignment=Qt.AlignmentFlag.AlignRight)
+        
+        self.History_btn = QToolButton()
+        self.History_btn.setText("история")
+        self.History_btn.setIcon(QIcon(f"./assets/icons/{"history"}.png"))
+        self.History_btn.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
+        self.History_btn.setMinimumHeight(50)
+        self.footer_box_layout.addWidget(self.History_btn, alignment=Qt.AlignmentFlag.AlignRight)
+        
         self.Timer_btn = QToolButton()
         self.Timer_btn.setText("таймер")
         self.Timer_btn.setIcon(QIcon(f"./assets/icons/{"Timer"}.png"))

@@ -61,7 +61,8 @@ def get_program_path(key: str, exe_name: str):
     settings = commands.load_settings()
 
     if key in settings["directories"]:
-        return settings["directories"][key]
+        if len(settings["directories"][key]) > 1:
+            return settings["directories"][key]
 
     path = find_program(exe_name)
     if path:

@@ -70,3 +70,5 @@ class SystemInfoWidget(QWidget):
         self.cpu_label.setText(f"CPU:\t {cpu:.1f}%")
         self.ram_label.setText(f"RAM:\t {ram:.1f}%")
         self.net_label.setText(f"NET:\t {net_speed:.2f} KB/s")
+
+        
